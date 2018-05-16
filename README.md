@@ -20,3 +20,6 @@ The remaining of the project is described in our jupyter notebook(s)
 1. Download `2 - Two-Classes Classification (BNCI) Colab.ipynb` and upload it on your Google Drive.
 1. Open [Google Colab](https://colab.research.google.com)
 1. Instructions for dataset download and python library installation are described in the Jupyter notebook.
+
+## Resources
+For more papers on DL applications on EEG, you could refer to this [repo](https://github.com/arnaghosh/DL-neuro_Papers). Feel free to contribute.
