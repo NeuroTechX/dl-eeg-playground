@@ -17,7 +17,7 @@ from numpy.random import RandomState
 #Load optimizer. You can find hyperparameters in the link below.  
 #http://pytorch.org/docs/master/optim.html
 
-class SkLearnBrainDecode(BaseEstimator, ClassifierMixin):  
+class ShallowFBCSPNetWrapper(BaseEstimator, ClassifierMixin):  
     """An example of classifier"""
 
     def __init__(self, 

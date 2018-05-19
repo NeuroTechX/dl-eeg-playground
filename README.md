@@ -1,5 +1,16 @@
 # dl-eeg-playground
-Deep Learning EEG Playground
+You have found the Deep Learning EEG Playground, put together by the Montreal Hacknight. 
+
+The repo is a bit messy, but what you should find in here:
+- examples on how to usual stuff with colab
+- a pyRiemann comparative example
+- brain-decode based experimentations:
+    - tutorial from their website
+    - x86 execution
+    - colab based code
+    - sklearn wrapper
+    
+We are currently working toward integrating braindecode into MOABB, feel free to join us every other Fridays @ District 3 Innovation Center
 
 
 # SETUP
