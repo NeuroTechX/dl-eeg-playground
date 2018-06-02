@@ -1,7 +1,17 @@
 
 
-from sklearn.base import BaseEstimator, ClassifierMixin
+"""
+BrainDecode encapsulation into a sklearn classifier
 
+BrainDecode
+ref: https://github.com/robintibor/braindecode
+ref: Schirrmeister, R. T., Springenberg, J. T., Fiederer, L. D. J., Glasstetter, M., Eggensperger, K., Tangermann, M., ... & Ball, T. (2017). 
+     Deep learning with convolutional neural networks for EEG decoding and visualization. Human brain mapping, 38(11), 5391-5420.
+
+
+"""
+
+from sklearn.base import BaseEstimator, ClassifierMixin
 from braindecode.datautil.signal_target import SignalAndTarget
 from braindecode.models.shallow_fbcsp import ShallowFBCSPNet
 from torch import nn
@@ -13,13 +23,21 @@ from braindecode.datautil.iterators import get_balanced_batches
 import torch.nn.functional as F
 import numpy as np
 from numpy.random import RandomState
+from random import randint
 
 #Load optimizer. You can find hyperparameters in the link below.  
 #http://pytorch.org/docs/master/optim.html
 
+        
 class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):  
-    """An example of classifier"""
-
+    
+    
+    
+    """
+        Initialize the parameters of the network
+        Full list of parameters described in 
+        ref: https://robintibor.github.io/braindecode/source/braindecode.models.html
+    """
     def __init__(self, 
                 n_filters_time=10,
                 filter_time_length=75,
@@ -30,8 +48,8 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
                     
         # init meta info
         self.cuda = torch.cuda.is_available()
-        set_random_seeds(seed=20180505, cuda=self.cuda)  # TODO: Fix random seed
-        
+        #set_random_seeds(seed=20180505, cuda=self.cuda)  # TODO: Fix random seed
+        set_random_seeds(seed=randint(), cuda=self.cuda)  # TODO: Fix random seed
         
         # copy all network parameters
         self.n_filters_time=n_filters_time
@@ -43,6 +61,13 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
         
         return 
 
+    """
+        Fit the network
+        Params:
+            X, data array in the format (...)
+            y, labels
+        ref: http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/
+    """
     def fit(self, X, y):
         
         # define a number of train/test trials
@@ -72,26 +97,35 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
                                 
                                 ).create_network()
         
+        # setup model for cuda
         if self.cuda:
             self.model.cuda()
         
+        # setup optimizer
         self.optimizer = optim.Adam(self.model.parameters())
         
+        # random generator
         self.rng = RandomState(None)
         
+        # array that tracks results
         self.loss_rec = np.zeros((self.nb_epoch,2))
         self.accuracy_rec = np.zeros((self.nb_epoch,2))
                 
-                
+        # run all epoch
         for i_epoch in range(self.nb_epoch):
             
             self._batchTrain(i_epoch, train_set)
             self._evalTraining(i_epoch, train_set, test_set)
 
-        
         return self
 
     
+    """
+        Training iteration, train the network on the train_set
+        Params:
+            i_epoch, current epoch iteration
+            train_set, training set
+    """
     def _batchTrain(self, i_epoch, train_set):
     
     
@@ -131,6 +165,12 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
         return
         
         
+    """
+        Evaluation iteration, computes the performance the network
+        Params:
+            i_epoch, current epoch iteration
+            train_set, training set
+    """
     def _evalTraining(self, i_epoch, train_set, test_set):
         
     
@@ -140,20 +180,27 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
         
         sets = {'Train' : 0, 'Test' : 1}
         
+        # run evaluation on both train and test sets
         for setname, dataset in (('Train', train_set), ('Test', test_set)):
             
+            # get balanced sets
             i_trials_in_batch = get_balanced_batches(len(dataset.X), self.rng, batch_size=32, shuffle=False)
             
             outputs = []
             net_targets = []
             
+            # for all trials in set
             for i_trials in i_trials_in_batch:
+                
+                # adapt datasets
                 batch_X = dataset.X[i_trials][:,:,:,None]
                 batch_y = dataset.y[i_trials]
                 
+                # apply some conversion
                 net_in = np_to_var(batch_X)
                 net_target = np_to_var(batch_y)
                 
+                # convert
                 if self.cuda:
                     net_in = net_in.cuda()
                     net_target = net_target.cuda()
@@ -198,7 +245,4 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
             
         return outputs
 
-#    def score(self, X, y=None):
-
-#        return(sum(self.predict(X))) 
 
