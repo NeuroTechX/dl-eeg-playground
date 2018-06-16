@@ -25,9 +25,9 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
     def __init__(self, network=None, filename=None):
 
         if network is not None:
-            _decorateNetwork(network)
+            self._decorateNetwork(network)
         elif filename is not None:
-            _loadFromFile(filename)
+            self._loadFromFile(filename)
         else:
             print("unsupported option")
             sys.exit(-1)
