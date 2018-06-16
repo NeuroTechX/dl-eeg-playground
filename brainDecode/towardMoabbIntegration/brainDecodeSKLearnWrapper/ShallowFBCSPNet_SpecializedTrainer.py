@@ -37,8 +37,8 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
     
     def configure(self, 
                   nb_epoch=160, 
-                  initial_lr=0.00006
-                  trainTestRatio=7/8):
+                  initial_lr=0.00006,
+                  trainTestRatio=(7/8)):
         self.nb_epoch = nb_epoch
         self.lr = initial_lr
         self.trainTestRatio = trainTestRatio
