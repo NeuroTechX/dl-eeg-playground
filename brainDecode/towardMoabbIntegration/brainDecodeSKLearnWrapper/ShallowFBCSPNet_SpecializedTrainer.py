@@ -64,11 +64,11 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
                                 n_classes=n_classes,
                                 input_time_length=train_set.X.shape[2],
                         
-                                n_filters_time=self.n_filters_time,
-                                filter_time_length=self.filter_time_length,
-                                n_filters_spat=self.n_filters_spat,
-                                pool_time_length=self.pool_time_length,
-                                pool_time_stride=self.pool_time_stride,
+                                n_filters_time=n_filters_time,
+                                filter_time_length=filter_time_length,
+                                n_filters_spat=n_filters_spat,
+                                pool_time_length=pool_time_length,
+                                pool_time_stride=pool_time_stride,
                                 
                                 final_conv_length='auto'
                                 
@@ -89,6 +89,8 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
     """
     def fit(self, X, y):
         
+        nb_epoch=160
+        
         # prepare an optimizer
         self.optimizer = optim.Adam(self.model.conv_classifier.parameters(),lr=0.00006)
         
@@ -105,11 +107,11 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
         self.rng = RandomState(None)
         
         # array that tracks results
-        self.loss_rec = np.zeros((self.nb_epoch,2))
-        self.accuracy_rec = np.zeros((self.nb_epoch,2))
+        self.loss_rec = np.zeros((nb_epoch,2))
+        self.accuracy_rec = np.zeros((nb_epoch,2))
                 
         # run all epoch
-        for i_epoch in range(self.nb_epoch):
+        for i_epoch in range(nb_epoch):
             
             self._batchTrain(i_epoch, train_set)
             self._evalTraining(i_epoch, train_set, test_set)
