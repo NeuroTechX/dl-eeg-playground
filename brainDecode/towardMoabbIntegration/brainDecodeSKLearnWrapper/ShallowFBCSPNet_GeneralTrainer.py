@@ -49,7 +49,7 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
         # init meta info
         self.cuda = torch.cuda.is_available()
         #set_random_seeds(seed=20180505, cuda=self.cuda)  # TODO: Fix random seed
-        set_random_seeds(seed=randint(), cuda=self.cuda)  # TODO: Fix random seed
+        set_random_seeds(seed=randint(1,20180505), cuda=self.cuda)  # TODO: Fix random seed
         
         # copy all network parameters
         self.n_filters_time=n_filters_time
