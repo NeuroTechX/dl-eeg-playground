@@ -23,7 +23,7 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
     model = None
 
     def __init__(self, network=None, filename=None):
-
+        self.cuda = True
         if network is not None:
             self._decorateNetwork(network)
         elif filename is not None:
