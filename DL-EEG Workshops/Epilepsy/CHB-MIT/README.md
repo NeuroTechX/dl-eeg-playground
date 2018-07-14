@@ -1,6 +1,8 @@
 # CHB-MIT Scalp EEG Database
 https://www.physionet.org/pn6/chbmit/
 
+![CHB-MIT EEG](./images/chbmit.png "CHB-MIT EEG")
+
 # Dataset Description
 Nb Sujects: 22
 Sampling Frequency: 256Hz
@@ -24,7 +26,7 @@ The beginning ([) and end (]) of each seizure is annotated in the .seizure annot
 
 
 # Notebooks
-1. [LSTM]() (Colab Ready)
+1. [LSTM](CHB-MIT_LSTM.ipynb) (Colab Ready)
 2. [CNN]() (Colab Ready)
 
 
