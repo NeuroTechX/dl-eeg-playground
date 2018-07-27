@@ -25,6 +25,7 @@ This series of workshops will focus on 5 categories: Sleep, Epilepsy, BCI, Emoti
 * [CHB-MIT Dataset](https://physionet.org/pn6/chbmit/)
 * [Boston Children's Hospital Epilepsy Dataset (PhysioNet)]()
 * [Kaggle Competition on Seizure Detection](https://www.kaggle.com/c/seizure-prediction/data#_=_)
+* [Temple University Hospital (TUH)](https://www.isip.piconepress.com/projects/tuh_eeg/index.shtml)
 
 ## BCI
 * BCI Competitions
