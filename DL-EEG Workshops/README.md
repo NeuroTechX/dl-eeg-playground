@@ -32,6 +32,8 @@ This series of workshops will focus on 5 categories: Sleep, Epilepsy, BCI, Emoti
 ## Emotions
 * [DEAP](http://www.eecs.qmul.ac.uk/mmv/datasets/deap/) (access required)
 
+## ERPs
+* [ERP - 4 Subjects, 10 Sessions (diff. days), ~11000 trials each](https://figshare.com/articles/A_dataset_for_the_test-retest_reliability_assessment_of_EEG_ERP_quantities/2068626)
 
 # Visualize the Data
 One quick way to look at an EDF file is via EDFBrowser. You won't be able to do any scripting, but just to look at the channels, the quality of the data, etc. It works well.
