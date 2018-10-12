@@ -48,8 +48,8 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
         self.model = network # TODO make a deep copy
         
         # deactivate training for all layers
-        for param in network.conv_classifier.parameters():
-            param.requires_grad = False
+        #for param in network.conv_classifier.parameters():
+        #    param.requires_grad = False
         
         # replace last layer with a brand new one (for which training is true by default)
         self.model.conv_classifier = nn.Conv2d(5, 2,(116, 1), bias=True).cuda()
