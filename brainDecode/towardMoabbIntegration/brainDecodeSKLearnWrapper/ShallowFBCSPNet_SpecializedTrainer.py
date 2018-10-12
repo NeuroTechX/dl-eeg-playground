@@ -67,13 +67,15 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
         n_filters_spat=5
         pool_time_length=60
         pool_time_stride=30
+        in_chans = 15
+        input_time_length = 3584
         
         
         # final_conv_length = auto ensures we only get a single output in the time dimension
         self.model = ShallowFBCSPNet(
                                 in_chans=in_chans, 
                                 n_classes=n_classes,
-                                input_time_length=train_set.X.shape[2],
+                                input_time_length=input_time_length,
                         
                                 n_filters_time=n_filters_time,
                                 filter_time_length=filter_time_length,
