@@ -62,13 +62,13 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
     def _loadFromFile(self, filename):
         
         # TODO: integrate this in saved file parameters somehow
-        n_filters_time=10
-        filter_time_length=75
-        n_filters_spat=5
-        pool_time_length=60
-        pool_time_stride=30
-        in_chans = 15
-        input_time_length = 3584
+        #n_filters_time=10
+        #filter_time_length=75
+        #n_filters_spat=5
+        #pool_time_length=60
+        #pool_time_stride=30
+        #in_chans = 15
+        #input_time_length = 3584
         
         
         # final_conv_length = auto ensures we only get a single output in the time dimension
