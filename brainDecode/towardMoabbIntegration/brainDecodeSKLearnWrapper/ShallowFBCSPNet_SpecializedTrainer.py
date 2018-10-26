@@ -86,6 +86,11 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
                                 final_conv_length='auto'
                                 
                                 ).create_network()
+                                
+        
+        # setup model for cuda
+        if self.cuda:
+            self.model.cuda()
         
         
         # load the saved network (makes it possible to run bottom form same starting point 
