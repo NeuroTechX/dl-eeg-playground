@@ -90,6 +90,7 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
         
         # setup model for cuda
         if self.cuda:
+            print("That's the new one")
             self.model.cuda()
         
         
