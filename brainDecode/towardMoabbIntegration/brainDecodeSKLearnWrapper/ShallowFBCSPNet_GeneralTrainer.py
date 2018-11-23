@@ -46,10 +46,11 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
                 pool_time_stride=30,
                 nb_epoch=160):
                     
+        # random generator
+        self.rng = RandomState(None)
         # init meta info
         self.cuda = torch.cuda.is_available()
-        #set_random_seeds(seed=20180505, cuda=self.cuda)  # TODO: Fix random seed
-        set_random_seeds(seed=randint(1,20180505), cuda=self.cuda)  # TODO: Fix random seed
+        set_random_seeds(seed=randint(1,20180505), cuda=self.cuda) 
         
         # copy all network parameters
         self.n_filters_time=n_filters_time
@@ -74,18 +75,18 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
         nb_train_trials = int(np.floor(7/8*X.shape[0]))
         
         # split the dataset
-        train_set = SignalAndTarget(X[:nb_train_trials], y=y[:nb_train_trials])
-        test_set = SignalAndTarget(X[nb_train_trials:], y=y[nb_train_trials:])
+        self.train_set = SignalAndTarget(X[:nb_train_trials], y=y[:nb_train_trials])
+        self.test_set = SignalAndTarget(X[nb_train_trials:], y=y[nb_train_trials:])
         
         # number of classes and input channels
         n_classes = np.unique(y).size
-        in_chans = train_set.X.shape[1]
+        in_chans = self.train_set.X.shape[1]
         
         # final_conv_length = auto ensures we only get a single output in the time dimension
         self.model = ShallowFBCSPNet(
                                 in_chans=in_chans, 
                                 n_classes=n_classes,
-                                input_time_length=train_set.X.shape[2],
+                                input_time_length=self.train_set.X.shape[2],
                         
                                 n_filters_time=self.n_filters_time,
                                 filter_time_length=self.filter_time_length,
@@ -104,8 +105,6 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
         # setup optimizer
         self.optimizer = optim.Adam(self.model.parameters())
         
-        # random generator
-        self.rng = RandomState(None)
         
         # array that tracks results
         self.loss_rec = np.zeros((self.nb_epoch,2))
@@ -114,8 +113,8 @@ class ShallowFBCSPNet_GeneralTrainer(BaseEstimator, ClassifierMixin):
         # run all epoch
         for i_epoch in range(self.nb_epoch):
             
-            self._batchTrain(i_epoch, train_set)
-            self._evalTraining(i_epoch, train_set, test_set)
+            self._batchTrain(i_epoch, self.train_set)
+            self._evalTraining(i_epoch, self.train_set, self.test_set)
 
         return self
 
