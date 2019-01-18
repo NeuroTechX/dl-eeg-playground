@@ -53,8 +53,9 @@ class ShallowFBCSPNet_SpecializedTrainer(BaseEstimator, ClassifierMixin):
         
         # replace last layer with a brand new one (for which training is true by default)
         self.model.conv_classifier = nn.Conv2d(5, 2,(116, 1), bias=True).cuda()
+        self.optimizer = optim.Adam(classifier.model.parameters())
         
-        # save/load only the model parameters(prefered solution) TODO: ask yannick
+        # save/load only the model parameters(prefered solution) TODO: ask yannick how to download I guess
         torch.save(self.model.state_dict(), "myModel.pth")
 
         return
