@@ -1,0 +1,7 @@
+mne>=0.16.1
+seaborn
+pandas
+scikit-learn
+torch==0.4.0
+braindecode==0.4.5
+scikit-optimize==0.5.2
